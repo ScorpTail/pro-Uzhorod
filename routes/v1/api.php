@@ -16,9 +16,9 @@ Route::group(['controller' => AuthController::class, 'middleware' => 'auth:sanct
     Route::post('logout', 'logout')->name('logout');
 });
 
-Route::group(['controller' => UserController::class, 'prefix' => 'user', 'as' => 'user.'], function () {
+Route::group(['controller' => UserController::class, 'middleware' => 'auth:sanctum', 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('', 'show')->name('show');
-    Route::post('edit', 'edit')->name('edit');
+    Route::post('', 'edit')->name('edit');
     Route::delete('delete', 'delete')->name('delete');
 });
 
