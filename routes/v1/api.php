@@ -7,9 +7,13 @@ use App\Http\Controllers\Api\V1\User\UserController;
 use App\Http\Controllers\Api\V1\Service\ServiceController;
 use App\Http\Controllers\Api\V1\Attraction\AttractionController;
 
-Route::group(['controller' => AuthController::class, 'prefix' => 'auth', 'as' => 'auth.'], function () {
+Route::group(['controller' => AuthController::class, 'middleware' => 'guest', 'prefix' => 'auth', 'as' => 'auth.'], function () {
     Route::post('register', 'register')->name('register');
     Route::post('login', 'login')->name('login');
+});
+
+Route::group(['controller' => AuthController::class, 'middleware' => 'auth:sanctum', 'prefix' => 'auth', 'as' => 'auth.'], function () {
+    Route::post('logout', 'logout')->name('logout');
 });
 
 Route::group(['controller' => UserController::class, 'prefix' => 'user', 'as' => 'user.'], function () {

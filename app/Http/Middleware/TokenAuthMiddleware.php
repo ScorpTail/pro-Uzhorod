@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\PersonalAccessToken;
 use Symfony\Component\HttpFoundation\Response;
 
 class TokenAuthMiddleware
@@ -18,7 +19,12 @@ class TokenAuthMiddleware
         $token = $request->bearerToken();
 
         if ($token) {
-            auth()->setToken($token);
+            $personalAccessToken = PersonalAccessToken::findToken($token);
+
+            if ($personalAccessToken) {
+                $user = $personalAccessToken->tokenable;
+                auth()->setUser($user);
+            }
         }
 
         return $next($request);
