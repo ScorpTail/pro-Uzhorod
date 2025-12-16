@@ -1,9 +1,10 @@
 <script setup></script>
 <template>
-  <div class="w-full max-w-[1500px] px-4 m-auto">
+  <div class="flex flex-col">
     <HeaderComponent />
-    <main>
+    <main class="min-h-screen">
       <NuxtPage />
     </main>
+    <FooterComponent />
   </div>
 </template>
