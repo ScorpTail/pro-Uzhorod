@@ -12,14 +12,14 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
         then: function () {
-            Route::middleware('api')
+            Route::middleware(['token_auth'])
                 ->prefix('api/v1')
                 ->name('api.v1.')
                 ->group(base_path('routes/v1/api.php'));
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias(['token_auth' => \App\Http\Middleware\TokenAuthMiddleware::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
