@@ -22,7 +22,13 @@ class ServiceController extends Controller
     {
         $service = Service::where('id', $id)
             ->where('status', StatusEnum::ACTIVE->value)
-            ->firstOrFail();
+            ->first();
+
+        if (!$service) {
+            return response()->json([
+                'message' => __('front.service.not_found'),
+            ], 404);
+        }
 
         return response()->json([
             'service' => $service,
