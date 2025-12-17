@@ -2,7 +2,7 @@
 const { title, description, image } = defineProps({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    image: { type: String, required: true },
+    image: { type: String },
 });
 </script>
 <template>

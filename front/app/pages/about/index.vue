@@ -1,218 +1,121 @@
 <script setup>
-const mainOficeInfo = [
+const factsBlock = [
+    {
+        icon: "pi-users",
+        title: "Мультикультурна спадщина",
+        description:
+            "Ужгород є домом для різноманітного населення, що включає українців, угорців, словаків, румунів та інші етнічні групи, створюючи унікальну культурну мозаїку.",
+    },
     {
         icon: "pi-map-marker",
-        title: "Народна площа 3",
-        text: "Uzhorod, 88000 Zakarpattia Oblast, Ukraine",
+        title: "Стратегічне розташування",
+        description:
+            "Розташоване на перехресті Центральної Європи, місто Ужгород межує зі Словаччиною і знаходиться недалеко від Угорщини, Румунії та Польщі.",
     },
     {
-        icon: "pi-phone",
-        title: "+380 (312) 61-27-43",
-        text: "Main Reception",
+        icon: "pi-building-columns",
+        title: "Культурний капітал",
+        description:
+            "Місто, в якому розташовано безліч музеїв, театрів, університетів та культурних установ, що зберігають і популяризують багату спадщину регіону.",
     },
     {
-        icon: "pi-envelope",
-        title: "info@uzhorod-city.gov.ua",
-        text: "General Inquiries",
-    },
-    {
-        icon: "pi-clock",
-        title: "Monday - Friday",
-        text: "9:00 AM - 6:00 PM",
-    },
-];
-const socialMedia = [
-    {
-        icon: "pi-facebook",
-        title: "Facebook",
-        link: "https://www.facebook.com/?locale=uk_UA",
-    },
-    {
-        icon: "pi-twitter",
-        title: "Twiter",
-        link: "https://www.facebook.com/?locale=uk_UA",
-    },
-    {
-        icon: "pi-instagram",
-        title: "Instagram",
-        link: "https://www.facebook.com/?locale=uk_UA",
-    },
-    {
-        title: "YouTube",
-        icon: "pi-youtube",
-        link: "https://www.facebook.com/?locale=uk_UA",
+        icon: "pi-arrow-up-right",
+        title: "Економічний центр",
+        description:
+            "Зростаючий центр торгівлі, туризму та транскордонного співробітництва з розвиненою інфраструктурою та бізнес-можливостями.",
     },
 ];
 
-const departmentContacts = [
-    {
-        title: "City Administration",
-        phone: "+380 (312) 61-27-43",
-        email: "admin@uzhorod-city.gov.ua",
-        address: "Narodna Square, 3",
-        time: "Mon-Fri: 9:00-18:00",
-    },
-    {
-        title: "City Administration",
-        phone: "+380 (312) 61-27-43",
-        email: "admin@uzhorod-city.gov.ua",
-        address: "Narodna Square, 3",
-        time: "Mon-Fri: 9:00-18:00",
-    },
-    {
-        title: "City Administration",
-        phone: "+380 (312) 61-27-43",
-        email: "admin@uzhorod-city.gov.ua",
-        address: "Narodna Square, 3",
-        time: "Mon-Fri: 9:00-18:00",
-    },
-    {
-        title: "City Administration",
-        phone: "+380 (312) 61-27-43",
-        email: "admin@uzhorod-city.gov.ua",
-        address: "Narodna Square, 3",
-        time: "Mon-Fri: 9:00-18:00",
-    },
+const labels = [
+    { icon: "pi-users", title: "Total Population", value: "115,000" },
+    { icon: "pi-map-marker", title: "Area", value: "41.6 km²" },
+    { icon: "pi-calendar", title: "Founded", value: "9th Century" },
+    { icon: "pi-bookmark", title: "Status", value: "Regional Center" },
 ];
 </script>
 <template>
-    <section class="mt-16">
+    <section class="mt-20 bg-gray-50">
         <PageBanner
-            title="Звяжіться з нами"
-            description="Зв'яжіться з міськими департаментами, надішліть запити або знайдіть інформацію про те, як з нами зв'язатися."
-            image="/images/home/hero.jpg"
+            title="Про Ужгород"
+            description="Відкрийте для себе багату історію, культуру та яскраве суспільство Ужгорода, адміністративного центру Закарпатської області на заході України."
         />
-        <div
-            class="main-container mt-20 flex flex-col lg:flex-row items-start gap-5"
-        >
-            <form
-                @submit.prevent
-                class="w-full border border-gray-300 rounded-2xl p-4 flex flex-col gap-3"
+        <div class="main-container flex flex-col gap-10 py-10">
+            <ul
+                class="flex items-center justify-between gap-3 overflow-x-auto w-full"
             >
-                <span class="text-2xl font-medium">
-                    Наділіть нам повідомлення
-                </span>
-                <p class="text-stone-500 text-sm">
-                    Заповніть форму нижче, і ми зв'яжемося з вами якомога
-                    швидше.
-                </p>
-                <div class="flex flex-wrap gap-4 justify-between">
-                    <FloatLabel variant="in" class="w-[48%]">
-                        <label for="first_name">Імя</label>
-                        <InputText id="first_name" class="w-full" />
-                    </FloatLabel>
-                    <FloatLabel variant="in" class="w-[48%]">
-                        <label for="last_name">Прізвище</label>
-                        <InputText id="last_name" class="w-full" />
-                    </FloatLabel>
-                    <FloatLabel variant="in" class="w-[48%]">
-                        <label for="email">Email</label>
-                        <InputText id="email" type="email" class="w-full" />
-                    </FloatLabel>
-                    <FloatLabel variant="in" class="w-[48%]">
-                        <label for="phone">Номер телефону</label>
-                        <InputText id="phone" type="tel" class="w-full" />
-                    </FloatLabel>
-                </div>
-                <FloatLabel variant="in" class="w-full">
-                    <label for="subject">Тема</label>
-                    <InputText id="subject" type="text" class="w-full" />
-                </FloatLabel>
-                <FloatLabel variant="in" class="w-full">
-                    <label for="message">Повідомлення</label>
-                    <InputText id="message" type="text" class="w-full" />
-                </FloatLabel>
-                <Button icon="pi pi-send" severity="contrast" label="Надіслати">
-                </Button>
-            </form>
-            <div class="w-full gl:max-w-[400px] flex flex lg:flex-col gap-5">
-                <div
-                    class="w-full border border-gray-300 rounded-xl p-4 flex flex-col gap-4"
-                >
-                    <span class="text-lg font-medium">
-                        <i class="text-lg! pi pi-building"></i>
-                        Головний офіс
-                    </span>
-                    <ul class="flex flex-col gap-4">
-                        <li
-                            v-for="item in mainOficeInfo"
-                            class="flex items-start gap-3"
-                        >
-                            <i
-                                :class="[
-                                    'text-blue text-lg leading-none pi',
-                                    item.icon,
-                                ]"
-                            ></i>
-                            <div class="flex flex-col gap-1">
-                                <span class="leading-none font-medium">
-                                    {{ item.title }}</span
-                                >
-                                <span
-                                    class="text-stone-600 max-w-[200px] text-sm"
-                                >
-                                    {{ item.text }}
-                                </span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div
-                    class="w-full h-max border border-gray-300 rounded-xl p-4 flex flex-col gap-4"
-                >
-                    <div class="text-lg font-medium">
-                        <li class="pi pi-hashtag"></li>
-                        Підпишіться на нас
-                    </div>
-                    <ul
-                        class="flex items-center flex-wrap justify-between gap-1"
-                    >
-                        <li
-                            v-for="item in socialMedia"
-                            class="w-[49%] border border-gray-300 px-2 py-1 rounded-xl hover:bg-gray-100"
-                        >
-                            <a
-                                :href="item.link"
-                                class="flex items-center gap-2"
-                            >
-                                <i :class="['pi', item.icon]"></i>
-                                <span class="text-sm font-medium">
-                                    {{ item.title }}
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="main-container flex flex-col gap-5 py-20">
-            <span class="text-2xl font-medium">Контакти відділу</span>
-            <ul class="flex flex-wrap justify-between gap-4 items-center">
                 <li
-                    v-for="item in departmentContacts"
-                    class="flex flex-col gap-2 w-full lg:w-[48%] border border-gray-300 rounded-xl p-4"
+                    v-for="item in labels"
+                    class="border border-gray-300 w-full rounded-xl p-4 bg-white flex items-center gap-4"
                 >
-                    <span class="font-medium text-xl">{{ item.title }}</span>
-                    <a
-                        :href="`tel:${item.phone}`"
-                        class="flex items-center gap-4 text-sm"
+                    <span
+                        class="bg-light-blue w-10 h-10 flex shrink-0 items-center justify-center rounded-xl"
                     >
-                        Номер телефону: {{ item.phone }}
-                    </a>
-                    <a
-                        :href="`mailto:${item.email}`"
-                        class="flex items-center gap-4 text-sm"
-                    >
-                         Пошта: {{ item.email }}
-                    </a>
-                    <p class="flex items-center gap-4 text-sm">
-                        Адреса: {{ item.address }}
-                    </p>
-                    <p class="flex items-center gap-4 text-sm">
-                        Графік: {{ item.time }}
-                    </p>
+                        <i :class="['pi text-blue text-2xl!', item.icon]"></i>
+                    </span>
+                    <div class="flex flex-col gap-2">
+                        <p class="text-sm text-gray-600 whitespace-nowrap">
+                            {{ item.title }}
+                        </p>
+                        <div class="font-bold text-2xl whitespace-nowrap">
+                            {{ item.value }}
+                        </div>
+                    </div>
                 </li>
             </ul>
+            <div>
+                <h2 class="text-2xl font-medium">Ключові факти</h2>
+                <ul class="flex flex-wrap gap-4 justify-between">
+                    <li
+                        v-for="item in factsBlock"
+                        class="w-[48%] border bg-white border-gray-300 rounded-2xl p-4 flex flex-col gap-4"
+                    >
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="bg-light-blue w-10 h-10 flex items-center justify-center rounded-xl"
+                            >
+                                <i
+                                    :class="[
+                                        'text-blue font-bold text-xl! pi',
+                                        item.icon,
+                                    ]"
+                                ></i>
+                            </span>
+                            <p class="text-xl">{{ item.title }}</p>
+                        </div>
+                        <p>{{ item.description }}</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="border border-gray-300 rounded-2xl p-4 bg-white">
+                <span class="text-xl font-medium">Про місто</span>
+                <p class="py-2 text-stone-700">
+                    Ужгород — місто на заході України, розташоване на кордоні зі
+                    Словаччиною та поблизу кордону з Угорщиною. Це
+                    адміністративний центр Закарпатської області та найменша за
+                    чисельністю населення обласна столиця України.
+                </p>
+                <p class="py-2 text-stone-700">
+                    Місто відоме своєю добре збереженою архітектурою, зокрема
+                    Ужгородським замком, численними церквами та соборами, а
+                    також чарівним історичним центром. Липова алея міста, одна з
+                    найдовших в Європі, є популярною пам'яткою, особливо під час
+                    весняного цвітіння.
+                </p>
+                <p class="py-2 text-stone-700">
+                    Ужгород є важливим культурним і освітнім центром, де
+                    розташовано кілька університетів, театрів і музеїв.
+                    Унікальне розташування міста зробило його плавильним котлом
+                    різних культур і традицій, що відбилося в його архітектурі,
+                    кухні та місцевих звичаях.
+                </p>
+                <p class="py-2 text-stone-700">
+                    Сьогодні Ужгород продовжує розвиватися як сучасне
+                    європейське місто, зберігаючи при цьому своє багате
+                    культурне спадщину і традиції. Місто активно сприяє розвитку
+                    туризму, транскордонного співробітництва та програм
+                    культурного обміну.
+                </p>
+            </div>
         </div>
     </section>
 </template>
