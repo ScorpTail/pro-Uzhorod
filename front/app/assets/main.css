@@ -2,21 +2,25 @@
 @import "primeicons/primeicons.css";
 
 @theme {
-  --color-blue: #155dfc;
-  --color-light-blue: #dbeafe;
-  --color-thin-blue: #f9fafb;
-  --color-dark-blue: #101828;
+    --color-blue: #155dfc;
+    --color-light-blue: #dbeafe;
+    --color-thin-blue: #f9fafb;
+    --color-dark-blue: #101828;
 }
 
 @layer components {
-  .main-container {
-    max-width: 1500px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 16px;
-  }
-  .heading-2 {
-    font-size: 24px;
-    font-weight: 700;
-  }
+    .main-container {
+        max-width: 1500px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 16px;
+    }
+    .heading-2 {
+        font-size: 24px;
+        font-weight: 700;
+    }
+}
+
+:root {
+    /* --p-floatlabel-in-input-padding-top: 0; */
 }
