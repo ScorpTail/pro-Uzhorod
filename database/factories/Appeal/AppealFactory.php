@@ -24,7 +24,7 @@ class AppealFactory extends Factory
             'title'            => $this->faker->sentence(),
             'content'          => $this->faker->text(),
             'status'           => StatusEnum::ACTIVE->value,
-            'user_id'          => $this->faker->phoneNumber(),
+            // 'user_id'          => $this->faker->phoneNumber(),
             'administrator_id' => 1,
         ];
     }
