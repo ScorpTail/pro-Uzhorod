@@ -17,7 +17,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function edit(Request $request)
+    public function update(Request $request)
     {
         $request->validate([
             'name'  => ['sometimes', 'string', 'max:255'],

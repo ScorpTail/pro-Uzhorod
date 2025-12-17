@@ -18,7 +18,7 @@ Route::group(['controller' => AuthController::class, 'middleware' => 'auth:sanct
 
 Route::group(['controller' => UserController::class, 'middleware' => 'auth:sanctum', 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('', 'show')->name('show');
-    Route::post('', 'edit')->name('edit');
+    Route::post('', 'update')->name('update');
     Route::delete('delete', 'delete')->name('delete');
 });
 

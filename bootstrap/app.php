@@ -17,6 +17,11 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->prefix('api/v1')
                 ->name('api.v1.')
                 ->group(base_path('routes/v1/api.php'));
+
+            Route::middleware(['auth:sanctum'])
+                ->prefix('admin')
+                ->name('admin.')
+                ->group(base_path('routes/admin.php'));
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {
