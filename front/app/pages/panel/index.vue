@@ -4,9 +4,5 @@ definePageMeta({
 });
 </script>
 <template>
-    <section class="mt-[120px]">
-        asasdsasdasd
-
-        <p>as;ldka;slkd;lsakd;lsakd;lsakd</p>
-    </section>
+    <section class="mt-[120px]"></section>
 </template>

@@ -9,7 +9,7 @@ const links = [
 ];
 </script>
 <template>
-    <div class="fixed top-3 left-3">
+    <div class="fixed top-3 left-3 z-10">
         <Button
             @click="visible = true"
             icon="pi pi-bars"
