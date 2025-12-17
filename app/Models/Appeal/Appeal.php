@@ -5,9 +5,12 @@ namespace App\Models\Appeal;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Appeal extends Model
 {
+    use HasFactory;
+
     /**
      * The table associated with the model.
      *
