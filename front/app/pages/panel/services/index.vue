@@ -3,13 +3,15 @@ definePageMeta({
     layout: "panel-layout",
 });
 
-const { data, error, status } = await useFetch("http://localhost/api/v1/news");
+const { data, error, status } = await useFetch(
+    "http://localhost/api/v1/service"
+);
 console.log(data);
 </script>
 <template>
     <div class="main-container">
         <DataTable
-            :value="data.news"
+            :value="data.services"
             :loading="status === 'pending'"
             paginator
             :rows="6"
@@ -24,9 +26,10 @@ console.log(data);
                     >
                 </template>
             </Column>
-            <Column field="title" header="Заголовок"></Column>
+            <Column field="name" header="Назва"></Column>
             <Column field="short_description" header="Стислий Опис"></Column>
-            <Column field="views" sortable header="Перегляди"></Column>
+            <Column field="description" header="Опис"></Column>
+            <Column field="phone" header="Номер телефону"></Column>
             <Column header="Створено">
                 <template #body="{ data }">
                     <NuxtTime
@@ -52,8 +55,18 @@ console.log(data);
             <Column header="Дії">
                 <template #body>
                     <div class="flex items-center gap-2">
-                        <Button severity="warn" icon="pi pi-pencil" />
-                        <Button severity="danger" icon="pi pi-trash" />
+                        <Button
+                            rounded
+                            variant="text"
+                            severity="warn"
+                            icon="pi pi-pencil"
+                        />
+                        <Button
+                            rounded
+                            variant="text"
+                            severity="danger"
+                            icon="pi pi-trash"
+                        />
                     </div>
                 </template>
             </Column>
