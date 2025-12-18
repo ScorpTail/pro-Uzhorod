@@ -17,7 +17,8 @@ class TokenAuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $token = $request->bearerToken();
-
+        logger()->info(time(), ['token' => $token]);
+        logger()->info(time(), $request->headers->all());
         if ($token) {
             $personalAccessToken = PersonalAccessToken::findToken($token);
 

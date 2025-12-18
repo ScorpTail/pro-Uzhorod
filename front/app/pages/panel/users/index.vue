@@ -7,6 +7,8 @@ definePageMeta({
 const { data, error, status } = await useFetch("http://localhost/admin/user", {
     headers: {
         Authorization: `Bearer ${token.value}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
     },
 });
 console.log(data.value);
