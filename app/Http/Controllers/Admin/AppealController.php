@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\Appeal\AppealStatusEnum;
-use App\Enums\StatusEnum;
 use Illuminate\Http\Request;
 use App\Models\Appeal\Appeal;
 use App\Http\Controllers\Controller;
-use App\Models\Attraction\Attraction;
 
 class AppealController extends Controller
 {

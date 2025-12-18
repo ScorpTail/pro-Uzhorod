@@ -15,6 +15,12 @@ class NewsController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        foreach ($news as $item) {
+            foreach ($item->images as $file) {
+                $item->setAttribute($file->image_type, $file->front_url);
+            }
+        }
+
         return response()->json([
             'news' => $news,
         ], 200);
@@ -30,6 +36,10 @@ class NewsController extends Controller
             return response()->json([
                 'message' => __('front.news.not_found'),
             ], 404);
+        }
+
+        foreach ($news->images as $item) {
+            $news->setAttribute($item->image_type, $item->front_url);
         }
 
         $news->increment('views');

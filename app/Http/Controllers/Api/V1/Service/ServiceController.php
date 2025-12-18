@@ -13,6 +13,12 @@ class ServiceController extends Controller
     {
         $services = Service::where('status', StatusEnum::ACTIVE->value)->get();
 
+        foreach ($services as $service) {
+            foreach ($service->images as $file) {
+                $service->setAttribute($file->image_type, $file->front_url);
+            }
+        }
+
         return response()->json([
             'services' => $services,
         ]);
@@ -28,6 +34,10 @@ class ServiceController extends Controller
             return response()->json([
                 'message' => __('front.service.not_found'),
             ], 404);
+        }
+
+        foreach ($service->images as $item) {
+            $service->setAttribute($item->image_type, $item->front_url);
         }
 
         return response()->json([

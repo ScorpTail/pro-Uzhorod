@@ -13,6 +13,12 @@ class AttractionController extends Controller
     {
         $attractions = Attraction::where('status', StatusEnum::ACTIVE->value)->get();
 
+        foreach ($attractions as $attraction) {
+            foreach ($attraction->images as $item) {
+                $attraction->setAttribute($item->image_type, $item->front_url);
+            }
+        }
+
         return response()->json([
             'attractions' => $attractions,
         ], 200);
@@ -24,6 +30,10 @@ class AttractionController extends Controller
 
         if (!$attraction) {
             return response()->json(['message' => __('front.attraction_not_found')], 404);
+        }
+
+        foreach ($attraction->images as $item) {
+            $attraction->setAttribute($item->image_type, $item->front_url);
         }
 
         return response()->json([
