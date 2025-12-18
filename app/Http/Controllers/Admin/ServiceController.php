@@ -3,12 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\StatusEnum;
+use App\Dto\Images\ImageDto;
 use Illuminate\Http\Request;
 use App\Models\Service\Service;
 use App\Http\Controllers\Controller;
+use App\Services\ImageServices\ImageService;
 
 class ServiceController extends Controller
 {
+    public function __construct(
+        protected ImageService $imageService,
+    ) {}
+
     public function index(Request $request)
     {
         $services = Service::get();
@@ -30,11 +36,14 @@ class ServiceController extends Controller
             'weekend_end_work'   => ['nullable', 'string', 'max:10'],
             'location'           => ['nullable', 'string', 'max:255'],
             'phone'              => ['nullable', 'string', 'max:20'],
+            'files.*.*'          => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ]);
 
         $serviceData = $request->all();
 
         $service = Service::create($serviceData);
+
+        $this->imageService->add($request->allFiles()['files'] ?? [], Service::class, $service->id);
 
         return response()->json(['message' => __('admin.service_created_successfully'), 'service' => $service], 201);
     }
@@ -70,11 +79,14 @@ class ServiceController extends Controller
             'weekend_end_work'   => ['nullable', 'string', 'max:10'],
             'location'           => ['nullable', 'string', 'max:255'],
             'phone'              => ['nullable', 'string', 'max:20'],
+            'files.*.*'          => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ]);
 
         $serviceData = $request->all();
 
         $service->update($serviceData);
+
+        $this->imageService->add($request->allFiles()['files'] ?? [], Service::class, $service->id);
 
         return response()->json(['message' => __('admin.service_updated_successfully'), 'service' => $service]);
     }
@@ -86,6 +98,8 @@ class ServiceController extends Controller
         if (!$service) {
             return response()->json(['message' => __('admin.service_not_found')], 404);
         }
+
+        $service->images()->delete();
 
         $service->delete();
 

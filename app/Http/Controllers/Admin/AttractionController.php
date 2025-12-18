@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Dto\Images\ImageDto;
 use App\Enums\StatusEnum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -36,7 +35,7 @@ class AttractionController extends Controller
             'end_time'           => ['nullable', 'string', 'max:10'],
             'weekend_start_time' => ['nullable', 'string', 'max:10'],
             'weekend_end_time'   => ['nullable', 'string', 'max:10'],
-            'files.*'            => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'files.*.*'            => ['sometimes', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ]);
 
         $attractionData = $request->all();
@@ -55,20 +54,7 @@ class AttractionController extends Controller
             'weekend_end_time'   => $attractionData['weekend_end_time'] ?? null
         ]);
 
-
-        foreach ($request->allFiles() as $type => $files) {
-            $position = 0;
-            foreach ($files as $file) {
-                $this->imageService->store(new ImageDto(
-                    objectId: $attraction->id,
-                    objectType: Attraction::class,
-                    type: $type,
-                    position: $position,
-                    file: $file
-                ));
-                $position++;
-            }
-        }
+        $this->imageService->add($request->allFiles()['files'] ?? [], Attraction::class, $attraction->id);
 
         return response()->json(['message' => __('admin.attraction_created_successfully'), 'attraction' => $attraction], 201);
     }
@@ -107,6 +93,8 @@ class AttractionController extends Controller
         ]);
 
         $attraction->update($validatedData);
+
+        $this->imageService->add($request->allFiles()['files'] ?? [], Attraction::class, $attraction->id);
 
         return response()->json(['message' => __('admin.attraction_updated_successfully'), 'attraction' => $attraction]);
     }

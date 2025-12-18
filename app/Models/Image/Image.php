@@ -31,7 +31,7 @@ class Image extends Model
 
     public function getImageTypeAttribute()
     {
-        return Storage::disk()->url($this->file_path . '/' . $this->filename);
+        return $this->type . '_images';
     }
 
     public function getFrontUrlAttribute()
