@@ -3,21 +3,26 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\StatusEnum;
-use App\Dto\Images\ImageDto;
 use Illuminate\Http\Request;
 use App\Models\Service\Service;
 use App\Http\Controllers\Controller;
+use App\Services\BitMask\DayBitMask;
 use App\Services\ImageServices\ImageService;
 
 class ServiceController extends Controller
 {
     public function __construct(
         protected ImageService $imageService,
+        protected DayBitMask $dayBitMask,
     ) {}
 
     public function index(Request $request)
     {
         $services = Service::get();
+
+        foreach ($services as $service) {
+            $service->working_days = $this->dayBitMask->maskToDays($service->working_days);
+        }
 
         return response()->json($services);
     }
@@ -40,6 +45,8 @@ class ServiceController extends Controller
         ]);
 
         $serviceData = $request->all();
+
+        $serviceData['working_days'] = $this->dayBitMask->daysToMask(explode(',', $serviceData['working_days']));
 
         $service = Service::create($serviceData);
 
@@ -83,6 +90,8 @@ class ServiceController extends Controller
         ]);
 
         $serviceData = $request->all();
+
+        $serviceData['working_days'] = $this->dayBitMask->daysToMask(explode(',', $serviceData['working_days']));
 
         $service->update($serviceData);
 

@@ -6,9 +6,14 @@ use App\Enums\StatusEnum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Attraction\Attraction;
+use App\Services\BitMask\DayBitMask;
 
 class AttractionController extends Controller
 {
+    public function __construct(
+        protected DayBitMask $dayBitMask,
+    ) {}
+
     public function index(Request $request)
     {
         $attractions = Attraction::where('status', StatusEnum::ACTIVE->value)->get();
@@ -17,6 +22,8 @@ class AttractionController extends Controller
             foreach ($attraction->images as $item) {
                 $attraction->setAttribute($item->image_type, $item->front_url);
             }
+
+            $attraction->working_days = $this->dayBitMask->maskToDays($attraction->working_days);
         }
 
         return response()->json([
@@ -34,6 +41,8 @@ class AttractionController extends Controller
 
         foreach ($attraction->images as $item) {
             $attraction->setAttribute($item->image_type, $item->front_url);
+
+            $attraction->working_days = $this->dayBitMask->maskToDays($attraction->working_days);
         }
 
         return response()->json([

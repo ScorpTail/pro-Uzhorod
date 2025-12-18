@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\StatusEnum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\BitMask\DayBitMask;
 use App\Models\Attraction\Attraction;
 use App\Services\ImageServices\ImageService;
 
@@ -12,11 +13,16 @@ class AttractionController extends Controller
 {
     public function __construct(
         protected ImageService $imageService,
+        protected DayBitMask $dayBitMask,
     ) {}
 
     public function index(Request $request)
     {
         $attractions = Attraction::get();
+
+        foreach ($attractions as $attraction) {
+            $attraction->working_days = $this->dayBitMask->maskToDays($attraction->working_days);
+        }
 
         return response()->json($attractions);
     }
@@ -39,6 +45,8 @@ class AttractionController extends Controller
         ]);
 
         $attractionData = $request->all();
+
+        $attractionData['working_days'] = $this->dayBitMask->daysToMask(explode(',', $attractionData['working_days']));
 
         $attraction = Attraction::create([
             'name'               => $attractionData['name'],
@@ -91,6 +99,8 @@ class AttractionController extends Controller
             'weekend_start_time' => ['sometimes', 'string', 'max:10'],
             'weekend_end_time'   => ['sometimes', 'string', 'max:10']
         ]);
+
+        $validatedData['working_days'] = $this->dayBitMask->daysToMask(explode(',', $validatedData['working_days']));
 
         $attraction->update($validatedData);
 
