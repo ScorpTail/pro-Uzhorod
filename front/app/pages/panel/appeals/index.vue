@@ -64,14 +64,6 @@ const deleteItem = async (id) => {
             <Column header="Дії">
                 <template #body="{ data }">
                     <div class="flex items-center gap-2">
-                        <NuxtLink :to="`/panel/appeals/edit/${data.id}`">
-                            <Button
-                                rounded
-                                variant="text"
-                                severity="warn"
-                                icon="pi pi-pencil"
-                            />
-                        </NuxtLink>
                         <Button
                             @click="deleteItem(data.id)"
                             rounded

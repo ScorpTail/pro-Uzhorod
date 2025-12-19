@@ -8,7 +8,15 @@ const { data } = await useFetch(`http://localhost/api/v1/service`);
             description="Отримайте вичерпну інформацію про міські послуги, адміністративні процедури та комунальні послуги, доступні для мешканців Ужгорода."
             image="/images/home/services.jpg"
         />
-        <div class="main-container">
+        <div class="main-container flex flex-col gap-5">
+            <div class="flex items-center justify-between">
+                <h2 class="heading-2">Послуги</h2>
+                <div class="flex items-center justify-between">
+                    <p class="text-gray-600 text-sm font-medium">
+                        Всього {{ data.services.length }} Послуг
+                    </p>
+                </div>
+            </div>
             <ul class="flex flex-wrap gap-5 justify-between">
                 <li v-for="item in data.services" class="w-[48%]">
                     <div

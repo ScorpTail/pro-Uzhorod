@@ -8,7 +8,13 @@ const { data } = await useFetch(`http://localhost/api/v1/attraction`);
             description="Відкрийте для себе багату культурну спадщину, історичні пам'ятки та природну красу Ужгорода та його околиць."
             image="/images/home/attractions.jpeg"
         />
-        <div class="main-container">
+        <div class="main-container flex flex-col gap-5">
+            <div class="flex items-center justify-between">
+                <h2 class="heading-2">Всі памятки</h2>
+                <p class="text-gray-600 text-sm font-medium">
+                    Всього {{ data.attractions.length }} Памяток
+                </p>
+            </div>
             <ul class="flex flex-wrap gap-5 justify-between">
                 <li
                     v-for="item in data.attractions"

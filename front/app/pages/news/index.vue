@@ -12,8 +12,14 @@ const featureNews = computed(() =>
             description="Stay informed about the latest developments, events, and announcements from the city of Uzhorod."
             image="/images/home/castlle.jpg"
         />
+
         <div class="main-container flex flex-col gap-4">
-            <span class="text-2xl font-normal">Особливі новини</span>
+            <div class="flex items-center justify-between">
+                <span class="text-2xl font-normal">Особливі новини</span>
+                <p class="text-gray-600 text-sm font-medium">
+                    Всього {{ data.news.length }} Новин
+                </p>
+            </div>
             <ul class="flex flex-wrap md:flex-nowrap gap-6">
                 <li v-for="item in featureNews" class="md:w-1/3">
                     <div
