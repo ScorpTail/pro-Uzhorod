@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AppealController;
+use App\Http\Controllers\Api\V1\Appeal\AppealController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\News\NewsController;
@@ -36,4 +36,8 @@ Route::group(['controller' => ServiceController::class, 'prefix' => 'service', '
 Route::group(['controller' => AttractionController::class, 'prefix' => 'attraction', 'as' => 'attraction.'], function () {
     Route::get('', 'index')->name('index');
     Route::get('{id}', 'show')->name('show');
+});
+
+Route::group(['controller' => AppealController::class, 'prefix' => 'appeal', 'as' => 'appeal.'], function () {
+    Route::post('', 'store')->name('store');
 });
