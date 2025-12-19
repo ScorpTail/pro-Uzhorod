@@ -7,46 +7,44 @@ const aboutInfoBlock = [
 ];
 const services = [
     {
-        title: "City Administration",
+        title: "Міська адміністрація",
         description:
-            "Access city council information, official documents, and administrative services.",
+            "Отримайте доступ до інформації міської ради, офіційних документів та адміністративних послуг.",
         link: "#",
         icon: "pi-home",
     },
     {
-        title: "City Administration",
+        title: "Громадський транспорт",
         description:
-            "Access city council information, official documents, and administrative services.",
+            "Перегляньте маршрути автобусів, розклади та інформацію про транспорт у місті.",
         link: "#",
-        icon: "pi-home",
+        icon: "pi-truck",
     },
     {
-        title: "City Administration",
+        title: "Охорона здоров'я",
         description:
-            "Access city council information, official documents, and administrative services.",
+            "Знайдіть інформацію про лікарні, клініки та медичні послуги в Ужгороді.",
         link: "#",
-        icon: "pi-home",
+        icon: "pi-heart",
     },
     {
-        title: "City Administration",
-        description:
-            "Access city council information, official documents, and administrative services.",
+        title: "Освіта",
+        description: "Школи, університети та навчальні заклади в регіоні.",
         link: "#",
-        icon: "pi-home",
+        icon: "pi-graduation-cap",
     },
     {
-        title: "City Administration",
+        title: "Документи та дозволи",
         description:
-            "Access city council information, official documents, and administrative services.",
+            "Подайте заявку на отримання дозволів, ліцензій та офіційних документів в режимі онлайн.",
         link: "#",
-        icon: "pi-home",
+        icon: "pi-file-check",
     },
     {
-        title: "City Administration",
-        description:
-            "Access city council information, official documents, and administrative services.",
+        title: "Культурні центри",
+        description: "Музеї, театри, бібліотеки та культурні події в місті.",
         link: "#",
-        icon: "pi-home",
+        icon: "pi-building-columns",
     },
 ];
 
@@ -111,6 +109,11 @@ const news = [
         date: "12-12-2025",
     },
 ];
+const { data } = await useFetch(`http://localhost/api/v1/news`);
+
+const featureNews = computed(() =>
+    data.value.news ? data.value.news.slice(3, 7) : []
+);
 </script>
 <template>
     <section class="relative w-full h-[500px] mt-16">
@@ -269,20 +272,20 @@ const news = [
         </div>
         <ul class="flex flex-wrap gap-4">
             <li
-                v-for="item in news"
+                v-for="item in featureNews"
                 class="w-full md:w-[48%] border border-slate-200 rounded-2xl"
             >
                 <article class="flex flex-col gap-6 p-4">
                     <div class="flex items-center gap-2">
                         <span
                             class="capitalize text-xs bg-slate-200 px-1.5 py-0.5 font-medium rounded-lg"
-                            >{{ item.tag }}</span
+                            >events</span
                         >
                     </div>
                     <span>{{ item.title }}</span>
                     <p class="text-sm font-light">{{ item.description }}</p>
                     <NuxtLink
-                        :to="item.link"
+                        to="/news"
                         class="text-center group text-blue hover:underline underline-offset-2 mt-3 font-medium text-sm"
                         >Дивитися більше
                         <i

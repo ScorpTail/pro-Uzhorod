@@ -1,17 +1,45 @@
 <script setup>
+const { token } = useAuth();
 definePageMeta({
     layout: "panel-layout",
 });
 
-const { data, error, status } = await useFetch(
-    "http://localhost/api/v1/attraction"
-);
-console.log(data);
+const {
+    data: attraction,
+    error,
+    status,
+} = await useFetch("http://localhost/admin/attraction", {
+    headers: {
+        Authorization: `Bearer ${token.value}`,
+    },
+});
+const deleteItem = async (id) => {
+    try {
+        const { data, error, status } = await useFetch(
+            `http://localhost/admin/attraction/${id}`,
+            {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token.value}`, // переконайся, що token.value є
+                },
+            }
+        );
+
+        if (error.value) {
+            console.error("Помилка при видаленні:", error.value);
+            return;
+        }
+        attraction.value = attraction.value.filter((item) => item.id !== id);
+    } catch (err) {
+        console.error("Помилка запиту:", err);
+    }
+};
 </script>
 <template>
     <div class="main-container">
+        <NuxtLink to="/panel/attractions/create"> Create</NuxtLink>
         <DataTable
-            :value="data.attractions"
+            :value="attraction"
             :loading="status === 'pending'"
             paginator
             :rows="6"
@@ -51,7 +79,7 @@ console.log(data);
             </Column>
 
             <Column header="Дії">
-                <template #body>
+                <template #body="{ data }">
                     <div class="flex items-center gap-2">
                         <Button
                             rounded
@@ -60,6 +88,7 @@ console.log(data);
                             icon="pi pi-pencil"
                         />
                         <Button
+                            @click="deleteItem(data.id)"
                             rounded
                             variant="text"
                             severity="danger"

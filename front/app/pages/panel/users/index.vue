@@ -4,19 +4,45 @@ definePageMeta({
     layout: "panel-layout",
 });
 
-const { data, error, status } = await useFetch("http://localhost/admin/user", {
+const {
+    data: user,
+    error,
+    status,
+} = await useFetch("http://localhost/admin/user", {
     headers: {
         Authorization: `Bearer ${token.value}`,
         "Content-Type": "application/json",
         Accept: "application/json",
     },
 });
-console.log(data.value);
+
+const deleteItem = async (id) => {
+    try {
+        const { data, error, status } = await useFetch(
+            `http://localhost/admin/user/${id}`,
+            {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token.value}`, // переконайся, що token.value є
+                },
+            }
+        );
+
+        if (error.value) {
+            console.error("Помилка при видаленні:", error.value);
+            return;
+        }
+        user.value = user.value.filter((item) => item.id !== id);
+    } catch (err) {
+        console.error("Помилка запиту:", err);
+    }
+};
 </script>
 <template>
-    <div class="main-container">
+    <div class="main-container flex flex-col gap-5 my-[60px]">
+        <NuxtLink to="/panel/users/create"> <Button label="Create" /></NuxtLink>
         <DataTable
-            :value="data"
+            :value="user"
             :loading="status === 'pending'"
             paginator
             :rows="6"
@@ -57,15 +83,18 @@ console.log(data.value);
                 </template>
             </Column>
             <Column header="Дії">
-                <template #body>
+                <template #body="{ data }">
                     <div class="flex items-center gap-2">
+                        <NuxtLink :to="`/panel/users/edit/${data.id}`">
+                            <Button
+                                rounded
+                                variant="text"
+                                severity="warn"
+                                icon="pi pi-pencil"
+                            />
+                        </NuxtLink>
                         <Button
-                            rounded
-                            variant="text"
-                            severity="warn"
-                            icon="pi pi-pencil"
-                        />
-                        <Button
+                            @click="deleteItem(data.id)"
                             rounded
                             variant="text"
                             severity="danger"

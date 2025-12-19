@@ -1,15 +1,45 @@
 <script setup>
+const { token } = useAuth();
 definePageMeta({
     layout: "panel-layout",
 });
 
-const { data, error, status } = await useFetch("http://localhost/api/v1/news");
-console.log(data);
+const {
+    data: news,
+    error,
+    status,
+} = await useFetch("http://localhost/admin/news", {
+    headers: {
+        Authorization: `Bearer ${token.value}`,
+    },
+});
+const deleteItem = async (id) => {
+    try {
+        const { data, error, status } = await useFetch(
+            `http://localhost/admin/news/${id}`,
+            {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token.value}`, // переконайся, що token.value є
+                },
+            }
+        );
+
+        if (error.value) {
+            console.error("Помилка при видаленні:", error.value);
+            return;
+        }
+        news.value = news.value.filter((item) => item.id !== id);
+    } catch (err) {
+        console.error("Помилка запиту:", err);
+    }
+};
 </script>
 <template>
-    <div class="main-container">
+    <div class="main-container flex flex-col gap-5 my-[60px]">
+        <NuxtLink to="/panel/news/create"> <Button label="Create" /> </NuxtLink>
         <DataTable
-            :value="data.news"
+            :value="news"
             :loading="status === 'pending'"
             paginator
             :rows="6"
@@ -50,15 +80,18 @@ console.log(data);
                 </template>
             </Column>
             <Column header="Дії">
-                <template #body>
+                <template #body="{ data }">
                     <div class="flex items-center gap-2">
+                        <NuxtLink :to="`/panel/news/edit/${data.id}`">
+                            <Button
+                                rounded
+                                variant="text"
+                                severity="warn"
+                                icon="pi pi-pencil"
+                            />
+                        </NuxtLink>
                         <Button
-                            rounded
-                            variant="text"
-                            severity="warn"
-                            icon="pi pi-pencil"
-                        />
-                        <Button
+                            @click="deleteItem(data.id)"
                             rounded
                             variant="text"
                             severity="danger"

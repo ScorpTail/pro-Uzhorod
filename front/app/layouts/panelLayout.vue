@@ -1,5 +1,6 @@
 <script setup>
 const visible = ref(true);
+const { setToken, token } = useAuth();
 
 const links = [
     { name: "Користувачі", link: "/panel/users" },
@@ -7,6 +8,21 @@ const links = [
     { name: "Памятки", link: "/panel/attractions" },
     { name: "Послуги", link: "/panel/services" },
 ];
+
+const logout = async () => {
+    try {
+        await useFetch("http://localhost/api/v1/auth/logout", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token.value}`,
+            },
+        });
+        setToken(null);
+        isModalOpen.value = false;
+    } catch (err) {
+        console.error("Logout failed:", err);
+    }
+};
 </script>
 <template>
     <div class="fixed top-3 left-3 z-10">
@@ -34,11 +50,22 @@ const links = [
         </ul>
         <template #footer>
             <div class="flex items-center gap-2">
-                <NuxtLink
-                    to="/"
-                    class="bg-red-500 text-white w-full rounded-xl text-center p-2 font-medium"
-                    >Головна</NuxtLink
-                >
+                <NuxtLink to="/">
+                    <Button
+                        label="На головну"
+                        icon="pi pi-home"
+                        class="flex-auto"
+                        variant="outlined"
+                    />
+                </NuxtLink>
+                <Button
+                    @click="logout()"
+                    label="Вийти"
+                    icon="pi pi-sign-out"
+                    class="flex-auto"
+                    severity="danger"
+                    text
+                ></Button>
             </div>
         </template>
     </Drawer>

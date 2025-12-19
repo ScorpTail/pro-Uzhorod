@@ -46,41 +46,41 @@ const socialMedia = [
 
 const departmentContacts = [
     {
-        title: "City Administration",
+        title: "Міська адміністрація",
         phone: "+380 (312) 61-27-43",
         email: "admin@uzhorod-city.gov.ua",
         address: "Narodna Square, 3",
         time: "Mon-Fri: 9:00-18:00",
     },
     {
-        title: "City Administration",
-        phone: "+380 (312) 61-27-43",
-        email: "admin@uzhorod-city.gov.ua",
-        address: "Narodna Square, 3",
-        time: "Mon-Fri: 9:00-18:00",
+        title: "Муніципальні послуги",
+        phone: "+380 (312) 61-38-92",
+        email: "services@uzhorod-city.gov.ua",
+        address: "Sobranetska St, 60",
+        time: "Mon-Fri: 9:00-17:00",
     },
     {
-        title: "City Administration",
-        phone: "+380 (312) 61-27-43",
-        email: "admin@uzhorod-city.gov.ua",
-        address: "Narodna Square, 3",
-        time: "Mon-Fri: 9:00-18:00",
+        title: "Туристична інформація",
+        phone: "+380 (312) 61-29-87",
+        email: "tourism@uzhorod-city.gov.ua",
+        address: "Korzo Street, 1",
+        time: "Mon-Fri: 9:00-18:00, Sat: 10:00-16:00",
     },
     {
-        title: "City Administration",
-        phone: "+380 (312) 61-27-43",
-        email: "admin@uzhorod-city.gov.ua",
-        address: "Narodna Square, 3",
-        time: "Mon-Fri: 9:00-18:00",
+        title: "Громадська безпека",
+        phone: "+380 (312) 61-42-15",
+        email: "safety@uzhorod-city.gov.ua",
+        address: "Teatralna Square, 15",
+        time: "24/7",
     },
 ];
 </script>
 <template>
-    <section class="mt-16">
+    <section class="mt-20">
         <PageBanner
             title="Звяжіться з нами"
             description="Зв'яжіться з міськими департаментами, надішліть запити або знайдіть інформацію про те, як з нами зв'язатися."
-            image="/images/home/hero.jpg"
+            image="/images/home/contacts.jpeg"
         />
         <div
             class="main-container mt-20 flex flex-col lg:flex-row items-start gap-5"

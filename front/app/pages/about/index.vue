@@ -34,10 +34,11 @@ const labels = [
 ];
 </script>
 <template>
-    <section class="mt-20 bg-gray-50">
+    <section class="mt-20 bg-gray-50 relative -z-2">
         <PageBanner
             title="Про Ужгород"
             description="Відкрийте для себе багату історію, культуру та яскраве суспільство Ужгорода, адміністративного центру Закарпатської області на заході України."
+            image="/images/home/about.jpg"
         />
         <div class="main-container flex flex-col gap-10 py-10">
             <ul
