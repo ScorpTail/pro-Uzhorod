@@ -22,7 +22,7 @@ class DayBitMask
     public function maskToDays(int $mask): array
     {
         if ($mask < 0 || $mask > 127) {
-            throw new \InvalidArgumentException('Mask must be in range 0..127');
+            return [];
         }
 
         $days = [];
