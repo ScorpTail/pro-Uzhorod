@@ -36,8 +36,11 @@ const deleteItem = async (id) => {
 };
 </script>
 <template>
-    <div class="main-container">
-        <NuxtLink to="/panel/attractions/create"> Create</NuxtLink>
+    <div class="main-container my-[60px] flex flex-col gap-5">
+        <h2 class="font-bold text-2xl">Памятки</h2>
+        <NuxtLink to="/panel/attractions/create">
+            <Button label=" Create"
+        /></NuxtLink>
         <DataTable
             :value="attraction"
             :loading="status === 'pending'"
@@ -81,12 +84,14 @@ const deleteItem = async (id) => {
             <Column header="Дії">
                 <template #body="{ data }">
                     <div class="flex items-center gap-2">
-                        <Button
-                            rounded
-                            variant="text"
-                            severity="warn"
-                            icon="pi pi-pencil"
-                        />
+                        <NuxtLink :to="`/panel/attractions/edit/${data.id}`">
+                            <Button
+                                rounded
+                                variant="text"
+                                severity="warn"
+                                icon="pi pi-pencil"
+                            />
+                        </NuxtLink>
                         <Button
                             @click="deleteItem(data.id)"
                             rounded

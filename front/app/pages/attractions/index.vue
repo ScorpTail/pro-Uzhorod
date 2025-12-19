@@ -10,10 +10,17 @@ const { data } = await useFetch(`http://localhost/api/v1/attraction`);
         />
         <div class="main-container">
             <ul class="flex flex-wrap gap-5 justify-between">
-                <!-- <li v-for="item in data.attractions" class="w-[48%]">
+                <li
+                    v-for="item in data.attractions"
+                    class="w-full sm:w-[48%] lg:w-[31%] flex"
+                >
                     <div
-                        class="w-full bg-white border border-gray-300 rounded-xl p-4 flex flex-col gap-3 hover:shadow-2xl duration-300"
+                        class="relative w-full bg-white border border-gray-300 rounded-xl p-4 flex flex-col gap-3 hover:shadow-2xl duration-300"
                     >
+                        <div class="absolute right-2 top-2">
+                            {{ item.rating }}
+                            <i class="pi pi-star-fill text-yellow-500"></i>
+                        </div>
                         <span class="text-xl font-medium">
                             {{ item.name }}
                         </span>
@@ -24,12 +31,6 @@ const { data } = await useFetch(`http://localhost/api/v1/attraction`);
                             <span
                                 class="flex flex-center gap-2 text-sm text-gray-700"
                             >
-                                <i class="pi pi-phone"></i>
-                                {{ item.phone }}
-                            </span>
-                            <span
-                                class="flex flex-center gap-2 text-sm text-gray-700"
-                            >
                                 <i class="pi pi-map-marker"></i>
                                 {{ item.location }}
                             </span>
@@ -37,11 +38,11 @@ const { data } = await useFetch(`http://localhost/api/v1/attraction`);
                                 class="flex flex-center gap-2 text-sm text-gray-700"
                             >
                                 <i class="pi pi-clock"></i>
-                                {{ item.start_work }} – {{ item.end_work }}
+                                {{ item.start_time }} – {{ item.end_time }}
                             </span>
                         </div>
                     </div>
-                </li> -->
+                </li>
             </ul>
         </div>
     </section>

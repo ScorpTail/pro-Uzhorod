@@ -1,12 +1,18 @@
 <script setup>
+const route = useRoute();
 const visible = ref(true);
 const { setToken, token } = useAuth();
-
+const isRouteActive = (path) => route.fullPath === path;
 const links = [
-    { name: "Користувачі", link: "/panel/users" },
-    { name: "Новини", link: "/panel/news" },
-    { name: "Памятки", link: "/panel/attractions" },
-    { name: "Послуги", link: "/panel/services" },
+    { icon: "pi-users", name: "Користувачі", link: "/panel/users" },
+    { icon: "pi-file", name: "Новини", link: "/panel/news" },
+    {
+        icon: "pi-building-columns",
+        name: "Памятки",
+        link: "/panel/attractions",
+    },
+    { icon: "pi-server", name: "Послуги", link: "/panel/services" },
+    { icon: "pi-envelope", name: "Зверенння", link: "/panel/appeals" },
 ];
 
 const logout = async () => {
@@ -40,12 +46,17 @@ const logout = async () => {
             </div>
         </template>
         <ul class="flex flex-col gap-3">
-            <li v-for="link in links">
-                <NuxtLink
-                    :to="link.link"
-                    class="font-medium hover:text-blue-400"
-                    >{{ link.name }}</NuxtLink
-                >
+            <li
+                v-for="link in links"
+                class="flex items-center gap-4 hover:text-blue-400 duration-300"
+                :class="
+                    isRouteActive(link.link) ? 'text-blue-400' : 'text-black'
+                "
+            >
+                <i :class="`pi ${link.icon}`"></i>
+                <NuxtLink :to="link.link" class="font-medium">
+                    {{ link.name }}
+                </NuxtLink>
             </li>
         </ul>
         <template #footer>

@@ -40,6 +40,7 @@ const deleteItem = async (id) => {
 </script>
 <template>
     <div class="main-container flex flex-col gap-5 my-[60px]">
+        <h2 class="font-bold text-2xl">Користувачі</h2>
         <NuxtLink to="/panel/users/create"> <Button label="Create" /></NuxtLink>
         <DataTable
             :value="user"

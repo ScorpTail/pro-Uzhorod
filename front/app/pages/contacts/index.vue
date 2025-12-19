@@ -74,6 +74,47 @@ const departmentContacts = [
         time: "24/7",
     },
 ];
+
+const appealData = ref({
+    name: "",
+    surname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+});
+const postAppeal = async () => {
+    const { data, error } = await useFetch("http://localhost/api/v1/appeal", {
+        method: "POST",
+        body: {
+            name: appealData.value.name,
+            surname: appealData.value.surname,
+            email: appealData.value.email,
+            phone: appealData.value.phone,
+            title: appealData.value.subject,
+            content: appealData.value.message,
+            user_id: "1",
+        },
+    });
+
+    if (error.value) {
+        console.error("Помилка відправки:", error.value);
+        return;
+    }
+
+    console.log("Звернення надіслано:", data.value);
+
+    // очистити форму
+    appealData.value = {
+        name: "",
+        surname: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+    };
+};
 </script>
 <template>
     <section class="mt-20">
@@ -99,30 +140,63 @@ const departmentContacts = [
                 <div class="flex flex-wrap gap-4 justify-between">
                     <FloatLabel variant="in" class="w-[48%]">
                         <label for="first_name">Імя</label>
-                        <InputText id="first_name" class="w-full" />
+                        <InputText
+                            v-model="appealData.name"
+                            id="first_name"
+                            class="w-full"
+                        />
                     </FloatLabel>
                     <FloatLabel variant="in" class="w-[48%]">
                         <label for="last_name">Прізвище</label>
-                        <InputText id="last_name" class="w-full" />
+                        <InputText
+                            v-model="appealData.surname"
+                            id="last_name"
+                            class="w-full"
+                        />
                     </FloatLabel>
                     <FloatLabel variant="in" class="w-[48%]">
                         <label for="email">Email</label>
-                        <InputText id="email" type="email" class="w-full" />
+                        <InputText
+                            v-model="appealData.email"
+                            id="email"
+                            type="email"
+                            class="w-full"
+                        />
                     </FloatLabel>
                     <FloatLabel variant="in" class="w-[48%]">
                         <label for="phone">Номер телефону</label>
-                        <InputText id="phone" type="tel" class="w-full" />
+                        <InputText
+                            v-model="appealData.phone"
+                            id="phone"
+                            type="tel"
+                            class="w-full"
+                        />
                     </FloatLabel>
                 </div>
                 <FloatLabel variant="in" class="w-full">
                     <label for="subject">Тема</label>
-                    <InputText id="subject" type="text" class="w-full" />
+                    <InputText
+                        v-model="appealData.subject"
+                        id="subject"
+                        type="text"
+                        class="w-full"
+                    />
                 </FloatLabel>
                 <FloatLabel variant="in" class="w-full">
                     <label for="message">Повідомлення</label>
-                    <InputText id="message" type="text" class="w-full" />
+                    <Textarea
+                        v-model="appealData.message"
+                        id="message"
+                        type="text"
+                        class="w-full"
+                    />
                 </FloatLabel>
-                <Button icon="pi pi-send" severity="contrast" label="Надіслати">
+                <Button
+                    @click="postAppeal()"
+                    icon="pi pi-send"
+                    severity="contrast"
+                    label="Надіслати"
+                >
                 </Button>
             </form>
             <div class="w-full lg:max-w-[400px] flex lg:flex-col gap-5">
